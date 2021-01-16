@@ -1,0 +1,31 @@
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import com.testsigma.testengine.exceptions.TestEngineException;
+
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.ios.IOSDriver;
+
+public class RegexUse extends TestsigmaCustomFunctions {
+	String str;
+	
+	@CustomTestStep
+    public TestStepResult stringTosubstr(String phonenumber) throws TestEngineException{
+		IOSDriver driver=(IOSDriver)getDriver();
+		str=getRuntimeData(phonenumber);
+		String[] parts=str.split("");
+		TouchAction action=new TouchAction(driver);
+		for(String digit:parts){
+			driver.findElementsByAccessibilityId(digit);
+			action.perform();
+		}
+		TestStepResult result=new TestStepResult();
+    	result.setStatus(ResultConstants.SUCCESS);
+    	result.setMessage("Successfully Entered :" +phonenumber);
+    	return result;
+		
+	}
+
+
+}
