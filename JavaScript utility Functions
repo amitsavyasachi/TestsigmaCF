@@ -1,0 +1,157 @@
+import java.lang.Exception;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+
+
+public class UtilityFunctions extends TestsigmaCustomFunctions{
+  @CustomTestStep
+  public TestStepResult jsExecutorDoubleClick(String locator){
+    //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+      WebElement element=driver.findElement(By.xpath(locator));
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+      js.executeScript("var evt = document.createEvent('MouseEvents');"+ "evt.initMouseEvent('dblclick',true, true, window, 0,0, 0, 0, 0, false, false, false, false, 0,null);"+ "arguments[0].dispatchEvent(evt);", element);
+      result.setMessage("Javascript Executor Double click success");
+      result.setStatus(ResultConstants.SUCCESS);
+    }catch(Exception e){
+      result.setMessage("Javascript Executor Double click failed");
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+  }
+  
+  @CustomTestStep
+  public TestStepResult jsExecutorMouseClick(String locator){
+    //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+      WebElement element=driver.findElement(By.xpath(locator));
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+      js.executeScript("arguments[0].dispatchEvent(new MouseEvent('click'))", element);
+      result.setMessage("Javascript Executor Mouse click success");
+      result.setStatus(ResultConstants.SUCCESS);
+    }catch(Exception e){
+      result.setMessage("Javascript Executor Mouse click failed");
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+  }
+  
+  
+  @CustomTestStep
+  public TestStepResult jsExecutorRightClick(String locator){
+    //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+        js.executeScript("var ele = document.evaluate(//div[@class='package']//div[@class='task-name' and text()='package1 '], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;var e = ele.ownerDocument.createEvent('MouseEvents');e.initMouseEvent('contextmenu', true, true, ele.ownerDocument.defaultView, 1, 0, 0, 0, 0, false, false, false, false, 2, null);!ele.dispatchEvent(e);");
+       result.setMessage("Javascript Executor Right click passed");
+      result.setStatus(ResultConstants.SUCCESS);
+    }catch(Exception e){
+      result.setMessage("Javascript Executor Right click failed"+e);
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+  }
+  
+  
+  @CustomTestStep
+  public TestStepResult shadowElementClick(String JsQuery) {
+     //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+    WebElement shadowElement = (WebElement) js.executeScript(JsQuery);
+      shadowElement.click();
+      result.setMessage("shadowElementClick success");
+      result.setStatus(ResultConstants.SUCCESS);
+      }catch(Exception e){
+      result.setMessage("shadowElementClick failed"+e);
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+}
+  
+  @CustomTestStep
+  public TestStepResult shadowElementGetText(String JsQuery) {
+     //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+    WebElement shadowElement = (WebElement) js.executeScript(JsQuery);
+     String text= shadowElement.getText();
+      result.setMessage("shadowElement get text success" +text);
+      result.setStatus(ResultConstants.SUCCESS);
+      }catch(Exception e){
+      result.setMessage("shadowElement get text failed" +e);
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+}
+  
+  @CustomTestStep
+  public TestStepResult shadowElementValidateText(String JsQuery,String ExpectedResult) {
+     //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+    WebElement shadowElement = (WebElement) js.executeScript(JsQuery);
+     String actualText= shadowElement.getText();
+      if(ExpectedResult.equals(actualText)){
+      result.setMessage("Actual result is matched with expected result" +actualText);
+      result.setStatus(ResultConstants.SUCCESS);
+      }
+      else{
+         result.setMessage("Actual result is not matched with expected result"+actualText);
+      result.setStatus(ResultConstants.FAILURE);  
+      }
+      }catch(Exception e){
+      result.setMessage("shadowElement get text failed" +e);
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+}
+  
+  @CustomTestStep
+  public TestStepResult shadowElementAttachFile(String JsQuery,String FilePath) {
+     //your custom code starts here
+    TestStepResult result = new TestStepResult();
+    try{
+
+      JavascriptExecutor js=(JavascriptExecutor)driver;
+    WebElement shadowElement = (WebElement) js.executeScript(JsQuery);
+      shadowElement.sendKeys(FilePath);
+       Thread.sleep(5000);
+      result.setMessage("shadowElementAttachFile success");
+      result.setStatus(ResultConstants.SUCCESS);
+      }catch(Exception e){
+      result.setMessage("shadowElementAttachFile failed" +e);
+      result.setStatus(ResultConstants.FAILURE);  
+    }
+    finally{
+    return result;
+    }
+}
+}
