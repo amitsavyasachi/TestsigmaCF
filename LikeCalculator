@@ -1,0 +1,48 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+public class likesCalculator extends TestsigmaCustomFunctions{
+
+		
+		@CustomTestStep
+
+		public TestStepResult calculator() throws Exception{
+			
+		String noofLikes=driver.findElement(By.className("boat-stats__icon-group")).getText();
+		int a =Integer.parseInt(noofLikes);
+		
+		try {
+			
+			WebElement Like=driver.findElement(By.xpath("//div[@class='boat-details-header__button']"));
+			Like.click();
+		}
+			
+		catch(Exception e) {
+				TestStepResult result=new TestStepResult();
+				result.setStatus(ResultConstants.FAILURE);
+				result.setMessage("Click Didnt Happen on Like Button");
+			}
+			Thread.sleep(10000);
+			String noofLikespostclick=driver.findElement(By.className("boat-stats__icon-group")).getText();
+			int b=Integer.parseInt(noofLikespostclick);
+			TestStepResult result=new TestStepResult();
+			int c=b-a;
+			if(c==1) {
+				System.out.println("Like Increased/Decreased by One");
+			}
+			
+			
+			
+    	result.setStatus(ResultConstants.SUCCESS);
+    	result.setMessage("Number of Likes before Click="+ noofLikes);
+    	result.setMessage("Number of Likes After Clicking on Like button is ="+ noofLikespostclick);
+    	result.setMessage("Verifed Click increased or Decreased by" + c);
+    	
+    	return result;
+		}
+}
