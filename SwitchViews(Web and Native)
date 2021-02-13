@@ -1,0 +1,60 @@
+import java.util.Set;
+
+import org.openqa.selenium.WebDriver;
+
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+import io.appium.java_client.AppiumDriver;
+
+public class Switchview extends TestsigmaCustomFunctions {
+@CustomTestStep
+	public TestStepResult SwitchtoNative() throws InterruptedException {
+	
+	AppiumDriver ad = (AppiumDriver) driver;
+	try {
+		@SuppressWarnings("unchecked")
+		Set<String> contexts = ad.getContextHandles();
+		for (String contextName : contexts) {
+		    System.out.println(contextName); 
+		}
+		ad.context((String) contexts.toArray()[0]);
+		TestStepResult result=new TestStepResult();
+		result.setStatus(ResultConstants.SUCCESS);
+		result.setMessage("Switched to Context" +contexts.toArray()[0]);
+		return result;
+	}
+	catch(Exception e) {
+		TestStepResult result=new TestStepResult();
+    	result.setStatus(ResultConstants.FAILURE);
+    	result.setMessage("Exception Occured!");
+    	return result;
+	}	
+	}
+@CustomTestStep
+public TestStepResult SwitchtoWebView() throws InterruptedException {
+	
+	AppiumDriver ad = (AppiumDriver) driver;
+	try {
+		@SuppressWarnings("unchecked")
+		Set<String> contexts = ad.getContextHandles();
+		for (String contextName : contexts) {
+		    System.out.println(contextName); 
+		}
+		ad.context((String) contexts.toArray()[1]);
+		TestStepResult result=new TestStepResult();
+		result.setStatus(ResultConstants.SUCCESS);
+		result.setMessage("Switched to Context"+contexts.toArray()[1]);
+		return result;
+	}
+	catch(Exception e) {
+		TestStepResult result=new TestStepResult();
+    	result.setStatus(ResultConstants.FAILURE);
+    	result.setMessage("Exception Occured!");
+    	return result;
+	
+}
+
+}}
