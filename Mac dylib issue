@@ -1,0 +1,7 @@
+sudo xattr -rd com.apple.quarantine *.*
+
+If not working:
+Navigate to <TestsigmaAgent>/lib and execute above
+Repeat same command after navigating to <TestsigmaAgent>/ios 
+Repeat same command after navigating to <TestsigmaAgent>/jre/lib/server
+>>>>>>>>>>>>>>>>>>this command will allow access to the files, you need to go to testsigma agent folder and execute this and again restart the agent.<<<<<<<<<<<<<<<<<<<<
