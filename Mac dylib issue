@@ -5,3 +5,10 @@ Navigate to <TestsigmaAgent>/lib and execute above
 Repeat same command after navigating to <TestsigmaAgent>/ios 
 Repeat same command after navigating to <TestsigmaAgent>/jre/lib/server
 >>>>>>>>>>>>>>>>>>this command will allow access to the files, you need to go to testsigma agent folder and execute this and again restart the agent.<<<<<<<<<<<<<<<<<<<<
+
+sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/lib
+sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/jre
+sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/android
+sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/appium
+sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/drivers
+
