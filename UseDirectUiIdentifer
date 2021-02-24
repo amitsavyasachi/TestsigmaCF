@@ -1,0 +1,31 @@
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import org.openqa.selenium.interactions.Actions;
+import com.testsigma.testengine.utilities.DynamicUiIdentifierUtil;
+import com.testsigma.testengine.entity.UiIdentifierEntity;
+
+public class CustomStepsSample extends TestsigmaCustomFunctions{
+    
+    @CustomTestStep
+    
+    public TestStepResult createCustomSteps() {
+              TestStepResult result= new TestStepResult();
+
+      try{
+         DynamicUiIdentifierUtil uiIdenUtil = new DynamicUiIdentifierUtil();
+         UiIdentifierEntity uiIdentifierEntity = uiIdenUtil.getUiIdentifier("temp_1",getSettings());
+         //your custom code starts here
+      	
+         //your custom code ends here
+
+        result.setStatus(ResultConstants.SUCCESS);
+        result.setMessage(uiIdentifierEntity.toString());
+      }catch(Exception e){
+                result.setMessage(e.getMessage());
+
+      }
+        return result;
+    }
+}
