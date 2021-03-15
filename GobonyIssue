@@ -41,7 +41,7 @@ public class imagemissing extends TestsigmaCustomFunctions {
 		ad.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"salon_container\"]/android.view.ViewGroup/android.widget.TextView[1]")).click();
 		TestStepResult result=new TestStepResult();
     	result.setStatus(ResultConstants.SUCCESS);
-    	result.setMessage("Successfully Entered Location");
+    	result.setMessage("Successfully Executed");
     	return result;
 	}
 	
@@ -68,7 +68,7 @@ public class imagemissing extends TestsigmaCustomFunctions {
 		
 		TestStepResult result=new TestStepResult();
     	result.setStatus(ResultConstants.SUCCESS);
-    	result.setMessage("Successfully Entered Location");
+    	result.setMessage("Successfully Executed");
     	return result;
 
 		
