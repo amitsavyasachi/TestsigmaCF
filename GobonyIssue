@@ -1,0 +1,74 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+import io.appium.java_client.AppiumDriver;
+
+public class imagemissing extends TestsigmaCustomFunctions {
+	
+	@CustomTestStep
+	public TestStepResult imagemissing() throws InterruptedException {
+		AppiumDriver ad = (AppiumDriver) driver;
+		
+		ad.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+
+		
+		ad.findElement(By.xpath("//*[@text='Skip']")).click();
+		
+		ad.findElement(By.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")).click();
+		
+		ad.findElement(By.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")).sendKeys("9911844391");
+		
+		ad.findElement(By.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]")).click();
+		
+		ad.findElement(By.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")).sendKeys("8149");
+		
+		ad.findElement(By.xpath("//android.widget.Button[contains(@text, 'Allow')]")).click();
+		
+		ad.findElement(By.xpath("//android.widget.Button[@content-desc=\"Search, tab, 2 of 4\"]")).click();
+		
+		ad.findElement(By.xpath("//android.widget.EditText[@content-desc=\"search_input\"]")).click();
+		
+		ad.findElement(By.xpath("//android.widget.EditText[@content-desc=\"search_input\"]")).sendKeys("Style Salon");
+		
+		ad.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"salon_container\"]/android.view.ViewGroup/android.widget.TextView[1]")).click();
+		
+		ad.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"salon_container\"]/android.view.ViewGroup/android.widget.TextView[1]")).click();
+		TestStepResult result=new TestStepResult();
+    	result.setStatus(ResultConstants.SUCCESS);
+    	result.setMessage("Successfully Entered Location");
+    	return result;
+	}
+	
+*************//Need to Swipe from Middle to TOP 2 times Via NLP then you can run the postswipe()//****************
+
+
+		@CustomTestStep
+		public TestStepResult postswipe() throws InterruptedException {
+			
+			AppiumDriver ad1 = (AppiumDriver) driver;
+
+		
+		ad1.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"search_button\"]/android.widget.TextView")).click();
+
+		ad1.findElement(By.xpath("//android.widget.EditText[@content-desc=\"search_input\"]")).sendKeys("Body Bleach");
+
+		ad1.findElement(By.xpath("//*[@text='ADD']")).click();
+		
+		Thread.sleep(10000);
+
+		ad1.findElement(By.xpath("//*[@text='Rohit']")).click();
+		TestStepResult result=new TestStepResult();
+    	result.setStatus(ResultConstants.SUCCESS);
+    	result.setMessage("Successfully Entered Location");
+    	return result;
+
+		
+		}
+		
+	}
