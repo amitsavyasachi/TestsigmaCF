@@ -63,6 +63,9 @@ public class imagemissing extends TestsigmaCustomFunctions {
 		Thread.sleep(10000);
 
 		ad1.findElement(By.xpath("//*[@text='Rohit']")).click();
+		
+		Thread.sleep(20000);
+		
 		TestStepResult result=new TestStepResult();
     	result.setStatus(ResultConstants.SUCCESS);
     	result.setMessage("Successfully Entered Location");
