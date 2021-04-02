@@ -1,0 +1,37 @@
+import java.net.URL;
+
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+
+
+import io.appium.java_client.ios.IOSDriver;
+
+public class Sauceruns {
+	public static final String URL = "https://krukmangada:846508c1-b42d-4fc7-a1e1-0770df454237@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+	public static void main(String[] args) throws Exception {
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("platformName", "ios");
+        capabilities.setCapability("deviceName", "iPhone.*");
+        capabilities.setCapability("platformVersion", "13");
+        //capabilities.setCapability("app", "");
+        capabilities.setCapability("browserName", "Safari");
+        capabilities.setCapability("deviceOrientation", "portrait");
+       // capabilities.setCapability("appiumVersion", "1.20.0");
+        
+        WebDriver driver = new IOSDriver<WebElement>( new URL(URL), capabilities);
+
+        
+
+
+	   driver.get("https://appium.io/docs/en/commands/device/app/launch-app/");
+	    
+	   System.out.println("Navigated to URL Successfully");
+
+		
+	}
+
+}
