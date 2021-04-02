@@ -17,12 +17,13 @@ public class apicall extends TestsigmaCustomFunctions{
         
         
         @CustomTestStep
-        public TestStepResult tiggerapicall() throws TestEngineException, IOException{
+        public TestStepResult tiggerapicall(String planid) throws TestEngineException, IOException, InterruptedException{
+        	
         	
         	final OkHttpClient client = new OkHttpClient().newBuilder()
         			  .build();
         			MediaType mediaType = MediaType.parse("application/json");
-        			RequestBody body = RequestBody.create(mediaType, "{\r\n\"executionId\": \"3437\"\r\n}");
+        			RequestBody body = RequestBody.create(mediaType, "{\r\n\"executionId\": \""+planid+"\"\r\n}");
         			Request request = new Request.Builder()
         			  .url("https://app.testsigma.com/api/v1/execution_results/")
         			  .method("POST", body)
@@ -34,47 +35,42 @@ public class apicall extends TestsigmaCustomFunctions{
         			String rp=response.body().string();
         
         		final String runid=rp.substring(rp.indexOf("id")+4, rp.indexOf("executionId")-2);
-        		final long timeInterval = 10000;
-        		Runnable runnable = new Runnable() {
-        			  public void run() {
-        			    while (true) {
-        			    	Request request2 = new Request.Builder()
-        	        				  .url("https://app.testsigma.com/api/v1/execution_results/"+runid+"")
-        	        				  .method("GET", null)
-        	        				  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MjIyZTZjZi1mMDcwLTRhYzItODg2Yy05ZTg0MWU4ZWEyNTgiLCJkb21haW4iOiJ0ZXN0c2lnbWEuY29tIn0.fAzjbNeSZsoVUxXmsbHjERsbqDZgyaN0ai8gwOI8NJGYuHpOeNhTbBtCVLc3nL2xkGn5rCBDWmeU_3iIB_Gvug")
-        	        				  .addHeader("Content-Type", "application/json")
-        	        				  .build();
-        	        				Response response2;
-									try {
-										response2 = client.newCall(request2).execute();
-										String rp2=response2.body().string();
-										if (rp2.contains("SUCCESS")) {
-											 TestStepResult result=new TestStepResult();
-						        	        	result.setMessage("Waited Until The other Test plan has executed");
-						        	        	result.setStatus(ResultConstants.SUCCESS);
-						        	     
-			        			            break;
-			        			        }  
-									} catch (IOException e1) {									
-										e1.printStackTrace();
-									}
-        	        	  			     
-        			      try {
-        			       Thread.sleep(timeInterval);
-        			      } catch (InterruptedException e) {
-        			        e.printStackTrace();
-        			      }
-        			      
-        			      }
-        			    
-        			    }
-        			  
-        			  };
-        			  
-        			  Thread thread = new Thread(runnable);
-        			  thread.start();
-					return null;
-        			 
+        		for(int i=1;i<=60;i++) {
+        			
+        			Request request2 = new Request.Builder()
+	        				  .url("https://app.testsigma.com/api/v1/execution_results/"+runid+"")
+	        				  .method("GET", null)
+	        				  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MjIyZTZjZi1mMDcwLTRhYzItODg2Yy05ZTg0MWU4ZWEyNTgiLCJkb21haW4iOiJ0ZXN0c2lnbWEuY29tIn0.fAzjbNeSZsoVUxXmsbHjERsbqDZgyaN0ai8gwOI8NJGYuHpOeNhTbBtCVLc3nL2xkGn5rCBDWmeU_3iIB_Gvug")
+	        				  .addHeader("Content-Type", "application/json")
+	        				  .build();
+	        				Response response2;
+							try {
+								response2 = client.newCall(request2).execute();
+								String rp2=response2.body().string();
+								Thread.sleep(10000);
+								driver.getTitle();
+								if (rp2.contains("SUCCESS") || (rp2.contains("FAILURE")) ||(rp2.contains("ABORTED"))) {
+									 TestStepResult result=new TestStepResult();
+				        	        	result.setMessage("Waited Until The other Test plan has executed");
+				        	        	result.setStatus(ResultConstants.SUCCESS);
+				        	     
+	        			            break;
+	        			        }  
+							} 
+							catch (IOException e1)
+							{									
+								e1.printStackTrace();
+							}
+        			
+        			
+        		}
+        		
+        		
+
+        		 TestStepResult result=new TestStepResult();
+ 	        	result.setMessage("Waited For Testplan with id="+planid+"with runid "+runid+"");
+ 	        	result.setStatus(ResultConstants.SUCCESS);
+ 	        	return result;
         	
         }
 }
