@@ -1,0 +1,31 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class Sauceruns {
+	public static final String URL = "https://krukmangada:846508c1-b42d-4fc7-a1e1-0770df454237@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+	public static void main(String[] args) throws Exception {
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+	    caps.setCapability("platform", "Windows 10");
+	    caps.setCapability("version", "latest");
+	    
+	 
+	    WebDriver driver = new RemoteWebDriver(new java.net.URL(URL), caps);
+	    
+	    ChromeOptions options = new ChromeOptions();
+	    options.addArguments("--disable-web-security"); 
+	    options.addArguments("--disable-gpu");
+	    options.addArguments("--user-data-dir=~/chromeTemp");
+	    driver.get("http://com.yopmail.com/en/");
+	    Thread.sleep(5000);
+	    driver.findElement(By.xpath("//span[contains(text(),'Check for new mails')]"));
+	    System.out.println("title of page is: " + driver.getTitle());
+	 
+	    driver.quit();
+		
+		
+	}
+
+}
