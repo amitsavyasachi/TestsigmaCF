@@ -1,0 +1,143 @@
+*******Click on Shadow DOM****************
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+
+public class ShadowRootElementClick extends TestsigmaCustomFunctions{
+    
+    @CustomTestStep
+    
+    public TestStepResult createCustomSteps(String Path) {
+              TestStepResult result= new TestStepResult();
+
+             
+         
+         JavascriptExecutor jse=(JavascriptExecutor)driver;
+
+         WebElement clickElement= (WebElement) jse.executeScript(Path);
+		((JavascriptExecutor)driver).executeScript("arguments[0].click();", clickElement);
+
+        result.setStatus(ResultConstants.SUCCESS);
+        result.setMessage("Successfully Executed");
+        return result;
+    }
+}
+********************************Enter Text on Shadow DOM*************************
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+
+public class ShadowRootElementEnter extends TestsigmaCustomFunctions{
+    
+    @CustomTestStep
+    
+    public TestStepResult createCustomSteps(String Path) {
+              TestStepResult result= new TestStepResult();
+
+             
+         
+         JavascriptExecutor jse=(JavascriptExecutor)driver;
+
+         WebElement visa= (WebElement) jse.executeScript(Path);
+		((JavascriptExecutor)driver).executeScript("arguments[0].value='00000000'", visa);
+
+        result.setStatus(ResultConstants.SUCCESS);
+        result.setMessage("Successfully Executed");
+        return result;
+    }
+}
+***********************************Select FromDropDown*************************
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+public class ShadowRootElementSelect extends TestsigmaCustomFunctions{
+    
+    @CustomTestStep
+    
+    public TestStepResult createCustomSteps(String Path) {
+              TestStepResult result= new TestStepResult();
+  
+         try{
+         JavascriptExecutor jse=(JavascriptExecutor)driver;
+
+         WebElement select= (WebElement) jse.executeScript(Path);
+         
+         WebElement shadowRoot= (WebElement) jse.executeScript("return arguments[0].shadowRoot",select);
+         WebElement selectElem = shadowRoot.findElement(By.id("sourcingGuidelineSelectElement"));
+         Select sel = new Select(selectElem);
+         sel.selectByVisibleText("[New Copy] [New Copy] Test00123");
+      
+		//((JavascriptExecutor)driver).executeScript("var select = arguments[0]; for(var i = 0; i < select.options.length; i++){ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }", select, "[New Copy] [New Copy] Test00123");
+
+        result.setStatus(ResultConstants.SUCCESS);
+        result.setMessage("Successfully Executed");
+        }catch(Exception e){
+        result.setStatus(ResultConstants.FAILURE);
+        result.setMessage(ExceptionUtils.getStackTrace(e));
+        }
+        return result;
+    }
+}
+**********************************Shadow root Verify**********************
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+public class ShadowRootElementVerify extends TestsigmaCustomFunctions{
+    
+    @CustomTestStep
+    
+    public TestStepResult createCustomSteps(String Path , String Verify_Text) {
+              TestStepResult result= new TestStepResult();
+  
+         try{
+         JavascriptExecutor jse=(JavascriptExecutor)driver;
+
+         WebElement select= (WebElement) jse.executeScript(Path);
+         
+         WebElement shadowRoot= (WebElement) jse.executeScript("return arguments[0].shadowRoot",select);
+         WebElement elm = shadowRoot.findElement(By.id("mustHaves"));
+          String areatext = elm.getAttribute("value");
+         if(areatext.contains(Verify_Text)){
+         result.setStatus(ResultConstants.SUCCESS);
+         result.setMessage("The Text present on the Textarea : '"+Verify_Text+"' TextArea Data '"+areatext+"'" );         
+         }else{
+         result.setStatus(ResultConstants.FAILURE);
+         result.setMessage("The Text Not present on the Textarea : '"+Verify_Text+"' TextArea Data '"+areatext+"'");  
+         }
+        }catch(Exception e){
+        result.setStatus(ResultConstants.FAILURE);
+        result.setMessage(ExceptionUtils.getStackTrace(e));
+        }
+        return result;
+    }
+}
+
+
+
+
+
+
