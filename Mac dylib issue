@@ -12,3 +12,16 @@ sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/android
 sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/appium
 sudo xattr -r -d com.apple.quarantine <agent_installation_folder>/drivers
 
+
+
+*********************************************************************
+
+Agent is Up and Running but while registering the agent you are asked to Start the agent.
+One of the possible cause: 
+
+Some time it seen that some of the http and https certificate are initially blocked by the system. In order to allow them you can use a curl command to know if the agent URLs are accessible. 
+You can use these two http and https curls to know extactly if there is anything which is blocking the testsigma agent.
+
+curl -X GET http://localhost:8383/agent
+curl -X GET https://local.testsigmaagent.com:8484/agent
+
