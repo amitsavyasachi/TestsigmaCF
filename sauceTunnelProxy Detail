@@ -1,0 +1,9 @@
+********To select any IOS device*********
+tunnelIdentifier -- String - sydney (in lower case)
+deviceName	----String -- iPhone .*   (it picks any phone provided you need to select platformVersion)
+platformVersion	 --- String - 14.0
+
+*********** To Run on any Android Device(Pixel Device)*********
+tunnelIdentifier -- String - sydney (in lower case)
+deviceName	----String -- *Google.*   (it picks any phone provided you need to select platformVersion)
+platformVersion	 --- String - 11 (make sure you dont add any".0" as suffix
