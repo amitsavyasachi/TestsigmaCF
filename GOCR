@@ -1,0 +1,88 @@
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import java.util.Base64;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+
+
+import io.appium.java_client.android.AndroidDriver;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class GoogleOcrsauce {
+	
+	public static final String URL = "https://krukmangada:846508c1-b42d-4fc7-a1e1-0770df454237@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+	public static void main(String[] args) throws IOException, InterruptedException {
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("deviceName", "Google_Pixel_4a_real_us");
+        capabilities.setCapability("platformVersion", "11");
+        capabilities.setCapability("app", "storage:1c0f75b7-f012-47d5-acf0-faacb0a3a3ab");
+        capabilities.setCapability("browserName", "");
+        capabilities.setCapability("deviceOrientation", "portrait");
+       
+        
+        AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>( new URL(URL), capabilities);
+       driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);	
+       
+       
+
+       driver.findElement(By.id("com.wibmo.wibmo_banking.stage.onboarding:id/mobile_edit_text")).sendKeys("8951339695");
+       driver.findElement(By.id("com.wibmo.wibmo_banking.stage.onboarding:id/tc_check_box")).click();
+       driver.findElement(By.id("com.wibmo.wibmo_banking.stage.onboarding:id/continue_btn")).click();
+       Thread.sleep(5000);
+       driver.findElement(By.id("com.android.permissioncontroller:id/permission_allow_button")).click();
+       
+       for(int i=1;i<=4;i++) {
+           Thread.sleep(5000);
+           driver.findElement(By.xpath("//*[@text='1']")).click();  	   
+       }
+
+       driver.findElement(By.xpath("//*[@text='Enter']")).click();
+       
+       Thread.sleep(5000);
+
+      File as=driver.findElement(By.xpath("(//android.widget.ImageView[@resource-id=\"com.wibmo.wibmo_banking.stage:id/imageSlide\"])[1]")).getScreenshotAs(OutputType.FILE);
+     
+       File tempfile = File.createTempFile("temp", ".png");
+       String temppath=tempfile.getAbsolutePath();
+       FileUtils.copyFile(as,new File(temppath));
+       
+       byte[] fileContent = FileUtils.readFileToByteArray(new File(temppath));
+       String encodedimage= Base64.getEncoder().encodeToString(fileContent);
+     
+ 			MediaType JSON = MediaType.get("application/json; charset=utf-8");
+ 			OkHttpClient client1 = new OkHttpClient();
+ 			StringBuilder stringBuilder = new StringBuilder();
+       
+       String jsonString1 = "{\"requests\": [{\"features\": [{\"type\": \"TEXT_DETECTION\",\"maxResults\": 1}],\"image\": {\"content\": \""+encodedimage+"\"}}]}";
+       RequestBody rb= RequestBody.create(JSON, jsonString1);
+       
+       Request postRequest = new Request.Builder()
+               .url("https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAq7EoPCuzjP00UAsLJK3PUk7UVA25G-yg").method("POST", rb).addHeader("Content-Type", "application/json")
+               .build();
+       
+       Response response = client1.newCall(postRequest).execute();
+       
+       System.out.println(response);
+      
+       
+       
+	}
+	
+        
+}
