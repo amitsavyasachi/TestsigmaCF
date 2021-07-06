@@ -1,0 +1,86 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+public class GetValue extends TestsigmaCustomFunctions {
+	TestStepResult result=new TestStepResult();
+	StringBuffer sb=new StringBuffer();
+	@CustomTestStep
+    public TestStepResult getValofElement(String LocatorType,String LocatorValue) throws Exception {
+		
+		try {
+		if(LocatorType.equalsIgnoreCase("Xpath")) {
+			try {
+				WebElement a1=driver.findElement(By.xpath(""+LocatorValue+""));
+				String val=a1.getAttribute("value");
+				 result.setStatus(ResultConstants.SUCCESS);
+				 result.setMessage("The value of the attribute is "+val);
+				
+			}
+			catch(NoSuchElementException ne) {
+				result.setStatus(ResultConstants.FAILURE);
+				result.setMessage("No Element Found with the Xpath"+LocatorValue);
+			}
+			catch(Exception e) {
+				 result.setStatus(ResultConstants.FAILURE);
+				 result.setMessage("Thrown Exception is "+ sb.append(e.getMessage()).toString());
+					
+			}
+			
+		}
+		else if(LocatorType.equalsIgnoreCase("id")) {
+			try {
+				WebElement a1=driver.findElement(By.id(""+LocatorValue+""));
+				String val=a1.getAttribute("value");
+				 result.setStatus(ResultConstants.SUCCESS);
+				 result.setMessage("The value of the attribute is "+val);
+			}
+			catch(NoSuchElementException ne) {
+				result.setStatus(ResultConstants.FAILURE);
+				result.setMessage("No Element Found with the id"+LocatorValue);
+			}
+			catch(Exception e) {
+				 result.setStatus(ResultConstants.FAILURE);
+				 result.setMessage("Thrown Exception is "+ sb.append(e.getMessage()).toString());
+			}
+		}
+			
+		else if(LocatorType.equalsIgnoreCase("CssSelector")) {
+			try {
+				WebElement a1=driver.findElement(By.cssSelector(""+LocatorValue+""));
+				String val=a1.getAttribute("value");
+				 result.setStatus(ResultConstants.SUCCESS);
+				 result.setMessage("The value of the attribute is "+val);
+			}
+			
+			catch(NoSuchElementException ne){
+				result.setStatus(ResultConstants.FAILURE);
+				result.setMessage("No Element Found with the CssSelector"+LocatorValue);
+				
+			}
+			catch(Exception e) {
+				 result.setStatus(ResultConstants.FAILURE);
+				 result.setMessage("Thrown Exception is "+ sb.append(e.getMessage()).toString());
+			}
+		}
+		else {
+			result.setStatus(ResultConstants.FAILURE);
+			result.setMessage("Operation Failure You may consider using id/Xpath/CssSelector");
+			
+		}
+		
+	}
+		catch(Exception e) {
+			result.setStatus(ResultConstants.FAILURE);
+			result.setMessage("Thrown Exception is "+ sb.append(e.getMessage()).toString());
+			
+		}
+		return result;
+		
+}
+}
