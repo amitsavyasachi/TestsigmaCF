@@ -1,0 +1,60 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
+import com.testsigma.customfunc.common.CustomTestStep;
+import com.testsigma.customfunc.common.TestsigmaCustomFunctions;
+import com.testsigma.customfunc.result.ResultConstants;
+import com.testsigma.customfunc.result.TestStepResult;
+
+public class GetValue extends TestsigmaCustomFunctions {
+	TestStepResult result=new TestStepResult();
+	StringBuffer sb=new StringBuffer();
+	WebElement a1;
+	@CustomTestStep
+    public TestStepResult getValofElement(String LocatorType,String LocatorValue) throws Exception {
+		try {
+		if(LocatorType.equalsIgnoreCase("Xpath")) {
+			
+				 a1=driver.findElement(By.xpath(""+LocatorValue+""));		
+		}			
+		else if(LocatorType.equalsIgnoreCase("id")) {
+				a1=driver.findElement(By.id(""+LocatorValue+""));
+		}
+				
+		else if(LocatorType.equalsIgnoreCase("CssSelector")) {
+				a1=driver.findElement(By.cssSelector(""+LocatorValue+""));
+		}
+		else {
+			result.setStatus(ResultConstants.FAILURE);
+			result.setMessage("Operation Failure You may consider using id/Xpath/CssSelector");
+			
+		}
+		}
+		catch(NoSuchElementException nse) {
+			result.setStatus(ResultConstants.FAILURE);
+			result.setMessage("No Such Element Found Check if the Locator is correct");
+			
+		}
+		catch(Exception e) {
+			result.setStatus(ResultConstants.FAILURE);
+		}
+		try {		
+		if(a1.getAttribute("value").isEmpty()||a1.getAttribute("value")==null) {
+			result.setMessage("Text Extracted is"+sb.append(a1.getText().toString()));
+		}
+		else if(a1.getAttribute("value").isEmpty()==false) {
+			result.setMessage("Value Extracted is"+sb.append(a1.getAttribute("value")));
+			sb.append(a1.getAttribute("value"));
+		}
+		else {
+			result.setMessage("NO TEXT or VALUE FOUND");
+		}}
+		catch(Exception e) {
+			result.setStatus(ResultConstants.FAILURE);
+			result.setMessage(e.getMessage());
+		}
+		return result;
+		
+}
+}
